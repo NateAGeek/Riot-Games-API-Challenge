@@ -3,7 +3,7 @@ import requests;
 import json;
 import time;
 
-apiDevKey           = "096de5b6-d371-41c2-a263-4db83088a4eb";
+apiDevKey           = "99edf43f-698f-4245-870f-51a5179c5e9e";
 region              = "na";
 baseURL             = "https://na.api.pvp.net";
 getListOfMatchesURL = "/api/lol/%s/v4.1/game/ids?beginDate=%s&api_key=%s";
