@@ -12,10 +12,10 @@ getListOfMatchesURL = "/api/lol/%s/v4.1/game/ids?beginDate=%s&api_key=%s";
 getMatchDataURL     = "/api/lol/%s/v2.2/match/%s?includeTimeline=true&api_key=%s";
 total_requests      = 0;
 
-def getListOfMatches_string(time, log):
+def getListOfMatches_string(timestamp, log):
   global total_requests;
   while True:
-    apiMatchListRequest = requests.get(baseURL + getListOfMatchesURL % (region, str(time), apiDevKey));
+    apiMatchListRequest = requests.get(baseURL + getListOfMatchesURL % (region, str(timestamp), apiDevKey));
 
     if apiMatchListRequest.status_code == 404 or apiMatchListRequest.status_code == 400 or apiMatchListRequest.status_code == 503:
       print "Data snag error? Code:" + apiMatchListRequest.status_code + " (waiting 10 seconds) \n"
@@ -33,7 +33,7 @@ def getListOfMatches_string(time, log):
     
       if log:
         print "*** Logging Match ID's for time: " + str(time) + " ***";
-        logFile             = open("logs/list_of_matchs_logs/urf_list_of_matchs_%s.json" % (str(time)), "wb");
+        logFile             = open("logs/list_of_matchs_logs/urf_list_of_matchs_%s.json" % (str(timestamp)), "wb");
         logFile.write(data);
     
       return data;
@@ -96,7 +96,7 @@ def loop_log_data(init_time = 1427865900, end_time = 1428018900, sql = True):
       match_data = getMatchData_struct(match_id, True, sql);
 
     init_time += 300
-    
+
   sqlConnection.close();
 
 
