@@ -2,7 +2,9 @@ import sys;
 import requests;
 import json;
 import time;
+import MySQLdb;
 
+sqlConnection       = None;
 apiDevKey           = "096de5b6-d371-41c2-a263-4db83088a4eb";
 region              = "na";
 baseURL             = "https://na.api.pvp.net";
@@ -65,21 +67,45 @@ def getMatchData_string(id, log):
     
       return data;
 
-def getMatchData_struct(id, log):
-  return json.loads(getMatchData_string(id, log));
+def getMatchData_struct(id, log, sql):
 
-def main(argv):
+  match_json_string = getMatchData_string(id, log);
+  match = json.loads(match_json_string);
 
-  init_time = int(argv[1]);
-  end_time  = int(argv[2]);
+  
+
+  if sql:
+    sqlConnection.query("""INSERT INTO `match` (match.match_id, match.timestamp, match.json_data) VALUES (%s, %s, '%s')""" % (match["matchId"], match["matchCreation"], json.dumps(match)));
+    sqlConnection.commit();
+
+
+
+  return match;
+
+def loop_log_data(init_time = 1427865900, end_time = 1428018900, sql = True):
+
   print "Begining to log data from " + str(init_time) + " to " + str(end_time) + "\n";
+
+  if sql:
+    global sqlConnection;
+    sqlConnection = MySQLdb.connect(host="localhost", user="root", passwd="", db="urf-data");
 
   while init_time <= end_time:
     list_of_matchs = getListOfMatches_struct(init_time, True);
     for match_id in list_of_matchs:
-      getMatchData_struct(match_id, True);
+      match_data = getMatchData_struct(match_id, True, sql);
 
     init_time += 300
+    
+  sqlConnection.close();
+
+
+def main(argv):
+
+  if len(argv) > 1:
+    loop_log_data(int(argv[1]), int(argv[2]));
+  else:
+    loop_log_data();
 
 if __name__ == "__main__":
   main(sys.argv);
