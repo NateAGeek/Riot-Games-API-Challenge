@@ -32,7 +32,7 @@ def getListOfMatches_string(timestamp, log):
       data = apiMatchListRequest.text;
     
       if log:
-        print "*** Logging Match ID's for time: " + str(time) + " ***";
+        print "*** Logging Match ID's for time: " + str(timestamp) + " ***";
         logFile             = open("logs/list_of_matchs_logs/urf_list_of_matchs_%s.json" % (str(timestamp)), "wb");
         logFile.write(data);
     
