@@ -9,11 +9,53 @@ body{
   border: 1px #00AFFF solid;
   border-radius: 10px;
   color: #FFF;
-  width: 45%;
-  .player-items{
-    .player-item{
-      display: inline-block;
+  height: 512px;
+  .champ-img{
+    float: left;
+  }
+  .player-stats{
+    height: 120px;
+    .player-stat{
+      display: block;
     }
+  }
+  .full-build, .summoner-spells{
+    border: 1px #00AAFF solid;
+    border-radius: 10px;
+    padding: 0;
+    margin: 2px;
+    display: inline-block;
+    padding: 10px;
+    .item-text, .summoner-spell-text{
+      font-size: 24px;
+      display: block;
+    }    
+  }
+  .player-items{
+    padding: 0;
+    margin: 0;
+    .player-item{
+      width: 64px;
+      height: 64px;
+    }
+    .no-item{
+      width: 64px;
+      height: 64px;
+      display: inline-block;
+      background-color: #999;
+    }
+  }
+}
+
+.player-item, .spells{
+  border: 1px #AAA solid;
+  border-radius: 4px;
+  margin: 2px;
+}
+
+.player-items{
+  .player-item{
+    display: inline-block;
   }
 }
 
@@ -21,6 +63,7 @@ body{
   position: relative;
   width: 512px;
   height: 512px;
+  float: left;
   .srift-map{
     position: absolute;
     top: 0;
@@ -35,5 +78,25 @@ body{
     }
     z-index: 1;
     border-radius: 5px;
+    .timeframe-stat-node{
+      display: none;
+      padding: 15px;
+      position: relative;
+      left: 15px;
+      bottom: 15px;
+      border-radius: 5px;
+      background-color: #000;
+      border: 1px #00AFFF solid;
+      .timeframe-stat{
+        display: block;
+      }
+      width: 250px;
+      z-index: 2;
+    }
+    &:hover{
+      .timeframe-stat-node{
+        display: block;  
+      }
+    }
   }
 }

@@ -14,10 +14,14 @@
   </head>
   <body>
     <?php
-      for ($i = 1; $i <= 10; $i++) { 
-        $player = build_LOLPlayerNode($i, true);
+      // for ($i=1; $i <=10 ; $i++) { 
+      //   $player = build_LOLPlayerNode($i, true);
+      //   echo $player->render();
+      // }
+
+        $player = build_LOLPlayerNode(1, true);
         echo $player->render();
-      }
+
     ?>
   </body>
 </html>

@@ -56,10 +56,15 @@
 
       if(!empty($this->player_timeline_data)){
         foreach ($this->player_timeline_data as $frame_index => $frame) {
-          $rendered_html .= '<div class="timeline-spot '.$this->team.'" style="bottom: '.$frame["position"]["y_mapImg"].'px; left: '.$frame["position"]["x_mapImg"].'px"></div><div>'.
-            '<span>Level: '.$frame["level"].'</span>'.
-            '<span>CS: '.$frame["cs"].'</span>'.
-            '<span>Position: {x:'.$frame["position"]["x"].', y:'.$frame["position"]["x"].'}</span>'.
+          $rendered_html .= ''.
+          '<div class="timeline-spot '.$this->team.'" style="bottom: '.$frame["position"]["y_mapImg"].'px; left: '.$frame["position"]["x_mapImg"].'px" player-delta-data="'.$this->player_data['participantId'].'">'.
+            '<div class="timeframe-stat-node">'.
+              '<span class="timeframe-stat-level timeframe-stat">Level: '.$frame["level"].'</span>'.
+              '<span class="timeframe-stat-cs timeframe-stat">Minions Killed: '.$frame["cs"].'</span>'.
+              '<span class="timeframe-stat-pos timeframe-stat">Position: {x:'.$frame["position"]["x"].', y:'.$frame["position"]["x"].'}</span>'.
+              '<span class="timeframe-stat-gold timeframe-stat">Gold: '.$frame['gold'].'</span>'.
+              '<span class="timeframe-stat-jgkills timeframe-stat">Jungle Minions Killed: '.$frame['jungleKills'].'</span>'.
+            '</div>'.
           '</div>';
         }
       }
@@ -67,51 +72,88 @@
       return $rendered_html;
     }
 
-    public function render() {
+    public function renderFinalBuild(){
+      global $static_iteam_img_url;
+      $rendered_html = '<div class="player-final-build">'.
+              '<ul class="player-items">';
+      for ($i = 1; $i <= 6; $i++) { 
+        $rendered_html .= ''.
+        '<li class="player-item" id="player-item-'.$i.'">';
+          if($this->player_data['item'.$i] == '0'){
+            $rendered_html .= '<div class="no-item"></div>';
+          }else{
+            $rendered_html .= '<img src="'.$static_iteam_img_url.''.$this->player_data['item'.$i].'.png"/>';
+          }
+        $rendered_html .= '</li>';
+      }
+
+      $rendered_html .= '</ul>'.
+            '</div>';
+      return $rendered_html;
+    }
+
+    public function renderMap(){
+      $rendered_html = '';
+      if(!empty($this->player_timeline_data)){
+        $rendered_html .= '<div class="timeline-map">';
+        $rendered_html .= $this->renderMapSpots();
+        $rendered_html .= '<img class="srift-map" src="http://ddragon.leagueoflegends.com/cdn/5.2.1/img/map/map11.png"/>';
+        $rendered_html .= '</div>';
+      }
+
+      return $rendered_html;
+    }
+
+    public function renderStats(){
+      global $static_champ_data;
+      krumo($this->player_data);
+      $rendered_html = '<div class="player-stats">'.
+        '<span class="player-id player-stat">Player '.$this->player_data['participantId'].'</span>'.
+        '<span class="">Champion: '.$static_champ_data->keys->{$this->player_data["championId"]}.'</span>'.
+        '<span class="player-kda player-stat">KDA: '. $this->player_data['kills'] .'/'.$this->player_data['deaths'].'/'.$this->player_data['assists'].'</span>'.
+        '<span class="player-cs player-stat">CS: '.$this->player_data['minionsKilled'].' </span>'.
+        '<span class="player-lane player-stat">Lane: '.$this->player_data['lane'].' </span>'.
+        '<span class="player-visionwardsbought player-stat">Vision Wards Bought: '.$this->player_data['visionWardsBoughtInGame'].'</span>'.
+        '<span class="player-sightwardsbought player-stat">Sight Wards Bought: '.$this->player_data['sightWardsBoughtInGame'].'</span>'.
+        '<span class="player-wardsplaced player-stat">Wards Placed: '.$this->player_data['wardsPlaced'].'</span>'.
+        '<span class="player-wardskilled player-stat">Wards Destroyed: '.$this->player_data['wardsKilled'].'</span>'.
+        '<span class="player-goldearned player-stat">Gold Earned: '.$this->player_data['goldEarned'].'</span>'.
+        '<span class="player-goldspent player-stat">Gold Spent: '.$this->player_data['goldSpent'].'</span>'.
+      '</div>';
+
+      return $rendered_html;
+    }
+
+    public function renderChamp(){
       global $static_champ_img_url;
       global $static_champ_data;
-      global $static_iteam_img_url;
+      return '<img class="champ-img" src="'.$static_champ_img_url.'/'.$static_champ_data->keys->{$this->player_data["championId"]}.'.png"/>';
+    }
 
-      // krumo($this->player_data);
+    public function renderSpells(){
+      global $static_spell_data;
+      global $static_spell_img_url;
 
+      return ''.
+        '<img id="spell-1" class="spells" src="'.$static_spell_img_url.''.$static_spell_data->data->{$this->player_data["spell1Id"]}->image->full.'"/>'.
+        '<img id="spell-2" class="spells" src="'.$static_spell_img_url.''.$static_spell_data->data->{$this->player_data["spell2Id"]}->image->full.'"/>';
+    }
+
+    public function render() {
       $rendered_html = ''.
-        '<div class="player-node">'.
-          '<img src="'.$static_champ_img_url.'/'.$static_champ_data->keys->{$this->player_data["championId"]}.'.png"/>'.
-          '<div class="player-info">'.
-            '<span class="player-kda">KDA: '. $this->player_data['kills'] .'/'.$this->player_data['deaths'].'/'.$this->player_data['assists'].'</span>'.
-            '<span class="player-cs">CS: '.$this->player_data['minionsKilled'].' </span>'.
-            '<span class="player-lane">Lane: '.$this->player_data['lane'].' </span>'.
-            '<div class="player-final-build">'.
-              '<ul class="player-items">'.
-                '<li class="player-item" id="player-item-1">'.
-                  '<img src="'.$static_iteam_img_url.''.$this->player_data['item1'].'.png"/>'.
-                '</li>'.
-                '<li class="player-item" id="player-item-2">'.
-                  '<img src="'.$static_iteam_img_url.''.$this->player_data['item2'].'.png"/>'.
-                '</li>'.
-                '<li class="player-item" id="player-item-3">'.
-                  '<img src="'.$static_iteam_img_url.''.$this->player_data['item3'].'.png"/>'.
-                '</li>'.
-                '<li class="player-item" id="player-item-4">'.
-                  '<img src="'.$static_iteam_img_url.''.$this->player_data['item4'].'.png"/>'.
-                '</li>'.
-                '<li class="player-item" id="player-item-5">'.
-                  '<img src="'.$static_iteam_img_url.''.$this->player_data['item5'].'.png"/>'.
-                '</li>'.
-                '<li class="player-item" id="player-item-6">'.
-                  '<img src="'.$static_iteam_img_url.''.$this->player_data['item6'].'.png"/>'.
-                '</li>'.
-              '</ul>'.
-            '</div>';
-        if(!empty($this->player_timeline_data)){
-          $rendered_html .= '<div class="timeline-map">';
-          $rendered_html .= $this->renderMapSpots();
-          $rendered_html .= '<img class="srift-map" src="http://ddragon.leagueoflegends.com/cdn/5.2.1/img/map/map11.png"/>';
+        '<div class="player-node">';
+          $rendered_html .= $this->renderMap();
+          $rendered_html .= $this->renderChamp();
+          $rendered_html .= $this->renderStats();
+          $rendered_html .= '<div class="summoner-spells">'.
+            '<span class="summoner-spell-text">Summoner Spells: </span>';
+            $rendered_html .= $this->renderSpells();
           $rendered_html .= '</div>';
-        }
-
-        $rendered_html .= ''.    
-          '</div>'.
+          $rendered_html .= '<div class="full-build">'.
+            '<span class="item-text">Full Build: </span>';
+            $rendered_html .= $this->renderFinalBuild();
+          $rendered_html .= '</div>';
+      $rendered_html .= ''.
         '</div>';
 
       return $rendered_html;

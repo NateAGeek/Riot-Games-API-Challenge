@@ -32,19 +32,24 @@
       $this->get_timelinedata = $get_timelinedata;
     }
 
+    public function renderMatchMap(){
+      $rendered_html = '';
+      if($this->get_timelinedata){
+        $rendered_html .= '<div class="timeline-map">';
+        foreach ($this->players_data as $player_index => $player) {
+          $rendered_html .= $player->renderMapSpots();
+        }
+        $rendered_html .= '<img class="srift-map" src="http://ddragon.leagueoflegends.com/cdn/5.2.1/img/map/map11.png"/>';
+        $rendered_html .= '</div>';
+      }
+      return $rendered_html;
+    }
+
     public function render(){
       $rendered_html = ''.
         '<div class="match-node">';
-
-        if($this->get_timelinedata){
-          $rendered_html .= '<div class="timeline-map">';
-          foreach ($this->players_data as $player_index => $player) {
-            $rendered_html .= $player->renderMapSpots();
-          }
-          $rendered_html .= '<img class="srift-map" src="http://ddragon.leagueoflegends.com/cdn/5.2.1/img/map/map11.png"/>';
-          $rendered_html .= '</div>';
-        }
-
+        $rendered_html .= $this->renderMatchMap();
+        
         $rendered_html .= ''.
         '</div>';
 

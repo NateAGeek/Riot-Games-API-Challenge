@@ -4,15 +4,61 @@
   border: 1px #00AFFF solid;
   border-radius: 10px;
   color: #FFF;
-  width: 45%;
+  height: 512px;
+}
+.player-node .champ-img {
+  float: left;
+}
+.player-node .player-stats {
+  height: 120px;
+}
+.player-node .player-stats .player-stat {
+  display: block;
+}
+.player-node .full-build,
+.player-node .summoner-spells {
+  border: 1px #00AAFF solid;
+  border-radius: 10px;
+  padding: 0;
+  margin: 2px;
+  display: inline-block;
+  padding: 10px;
+}
+.player-node .full-build .item-text,
+.player-node .summoner-spells .item-text,
+.player-node .full-build .summoner-spell-text,
+.player-node .summoner-spells .summoner-spell-text {
+  font-size: 24px;
+  display: block;
+}
+.player-node .player-items {
+  padding: 0;
+  margin: 0;
 }
 .player-node .player-items .player-item {
+  width: 64px;
+  height: 64px;
+}
+.player-node .player-items .no-item {
+  width: 64px;
+  height: 64px;
+  display: inline-block;
+  background-color: #999;
+}
+.player-item,
+.spells {
+  border: 1px #AAA solid;
+  border-radius: 4px;
+  margin: 2px;
+}
+.player-items .player-item {
   display: inline-block;
 }
 .timeline-map {
   position: relative;
   width: 512px;
   height: 512px;
+  float: left;
 }
 .timeline-map .srift-map {
   position: absolute;
@@ -28,5 +74,23 @@
 }
 .timeline-map .timeline-spot.red {
   background-color: red;
+}
+.timeline-map .timeline-spot .timeframe-stat-node {
+  display: none;
+  padding: 15px;
+  position: relative;
+  left: 15px;
+  bottom: 15px;
+  border-radius: 5px;
+  background-color: #000;
+  border: 1px #00AFFF solid;
+  width: 250px;
+  z-index: 2;
+}
+.timeline-map .timeline-spot .timeframe-stat-node .timeframe-stat {
+  display: block;
+}
+.timeline-map .timeline-spot:hover .timeframe-stat-node {
+  display: block;
 }
 /*# sourceMappingURL=css/main.css.map */
