@@ -1,1 +1,22 @@
-Start Match Epoch Timestamp: 1427865900
+Start Match Epoch Timestamp: 1427865900 + 1427867200
+
+
+The scary reset query for the database:
+TRUNCATE TABLE `bans`;
+TRUNCATE TABLE `creepsPerMinDeltas`;
+TRUNCATE TABLE `csDiffPerMinDeltas`;
+TRUNCATE TABLE `damageTakenDiffPerMinDeltas`;
+TRUNCATE TABLE `damageTakenPerMinDeltas`;
+TRUNCATE TABLE `goldPerMinDeltas`;
+TRUNCATE TABLE `masteries`;
+TRUNCATE TABLE `match`;
+TRUNCATE TABLE `match_timeline`;
+TRUNCATE TABLE `match_timeline_frames`;
+TRUNCATE TABLE `participant`;
+TRUNCATE TABLE `participant_timeline`;
+TRUNCATE TABLE `position`;
+TRUNCATE TABLE `runes`;
+TRUNCATE TABLE `stats`;
+TRUNCATE TABLE `team`;
+TRUNCATE TABLE `xpDiffPerMinDeltas`;
+TRUNCATE TABLE `xpPerMinDeltas`;
