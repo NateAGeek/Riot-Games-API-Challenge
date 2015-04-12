@@ -6,6 +6,19 @@
   color: #FFF;
   height: 512px;
 }
+.player-node .top-info {
+  font-size: 48px;
+  border-bottom: 1px solid #DDD;
+  margin-bottom: 15px;
+}
+.player-node .top-info .player-match-status-defeat {
+  float: right;
+  color: red;
+}
+.player-node .top-info .player-match-status-victory {
+  float: right;
+  color: blue;
+}
 .player-node .champ-img {
   float: left;
 }
@@ -43,7 +56,7 @@
   width: 64px;
   height: 64px;
   display: inline-block;
-  background-color: #999;
+  background-color: #333;
 }
 .player-item,
 .spells {

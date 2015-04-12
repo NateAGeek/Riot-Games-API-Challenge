@@ -24,10 +24,12 @@
     private $player_data = array();
     private $player_timeline_data = array();
     private $team;
+    private $winner;
 
     function __construct($player_struct, $get_timelinedata) {
       $this->player_data = $player_struct;
-      $this->team = ($this->player_data['teamId'] == '100') ? 'blue':'red';
+      $this->team = ($this->player_data['teamId'] == '100') ? 'blue' : 'red';
+      $this->winner = ($this->player_data['winner'] == '1') ? true : false;
       if($get_timelinedata){
         $result = db_query("SELECT * FROM `match_timeline_frames` AS `mtf` LEFT JOIN `position` AS `pos` ON `mtf`.position_id = `pos`.id WHERE `mtf`.match_id = '".$this->player_data["match_id"]."' AND `mtf`.participantId = '".$this->player_data["participantId"]."'");
 
@@ -106,7 +108,6 @@
 
     public function renderStats(){
       global $static_champ_data;
-      krumo($this->player_data);
       $rendered_html = '<div class="player-stats">'.
         '<span class="player-id player-stat">Player '.$this->player_data['participantId'].'</span>'.
         '<span class="">Champion: '.$static_champ_data->keys->{$this->player_data["championId"]}.'</span>'.
@@ -143,16 +144,20 @@
       $rendered_html = ''.
         '<div class="player-node">';
           $rendered_html .= $this->renderMap();
+          $rendered_html .= '<div class="top-info">'.
+            '<span class="player-id">Player '.$this->player_data['participantId'].'</span>'.
+            '<span class="player-match-status-'.(($this->winner) ? 'victory':'defeat').'">'.(($this->winner) ? 'Victory':'Defeat').'</span>'.
+          '</div>';
           $rendered_html .= $this->renderChamp();
-          $rendered_html .= $this->renderStats();
           $rendered_html .= '<div class="summoner-spells">'.
-            '<span class="summoner-spell-text">Summoner Spells: </span>';
+            '<span class="summoner-spell-text">Spells: </span>';
             $rendered_html .= $this->renderSpells();
           $rendered_html .= '</div>';
           $rendered_html .= '<div class="full-build">'.
             '<span class="item-text">Full Build: </span>';
             $rendered_html .= $this->renderFinalBuild();
           $rendered_html .= '</div>';
+          $rendered_html .= $this->renderStats();
       $rendered_html .= ''.
         '</div>';
 

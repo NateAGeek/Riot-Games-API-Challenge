@@ -14,7 +14,7 @@ getListOfMatchesURL = "/api/lol/%s/v4.1/game/ids?beginDate=%s&api_key=%s";
 getMatchDataURL     = "/api/lol/%s/v2.2/match/%s?includeTimeline=true&api_key=%s";
 total_requests      = 0;
 
-def getListOfMatches_string(timestamp, log, sql):
+def getListOfMatches_string(timestamp, log):
   global total_requests;
   while True:
     apiMatchListRequest = requests.get(baseURL + getListOfMatchesURL % (region, str(timestamp), apiDevKey));
@@ -43,7 +43,7 @@ def getListOfMatches_string(timestamp, log, sql):
 def getListOfMatches_struct(time, log):
   return json.loads(getListOfMatches_string(time, log));
 
-def getMatchData_string(id, log, sql):
+def getMatchData_string(id, log):
   global total_requests;
   while True:
     apiMatchDataRequest = requests.get(baseURL + getMatchDataURL % (region, str(id), apiDevKey));
@@ -66,8 +66,6 @@ def getMatchData_string(id, log, sql):
         print "\t*** Logging Match ID:" + str(id) + " ***";
         logFile             = open("logs/match_data/urf_match_id_%s.json" % (str(id)), "wb");
         logFile.write(data);
-      if sql:
-
     
       return data;
 
@@ -348,6 +346,7 @@ def sql_log_match_timeline(timeline, match_id):
     delta += 1;
 
 def sql_log_match(data):
+
   sql_log_teams(data["teams"], data["matchId"]);
   sql_log_participants(data["participants"], data["matchId"]);
   sql_log_match_timeline(data["timeline"], data["matchId"]);
@@ -401,13 +400,13 @@ def loop_log_data(init_time = 1427865900, end_time = 1428018900, sql = True):
   if sql:
     global sqlConnection;
     global sqlCursor;
-    sqlConnection = MySQLdb.connect(host="localhost", user="root", passwd="", db="urf-data");
+    sqlConnection = MySQLdb.connect(host="localhost", user="root", passwd="", db="urf-data",  cursorclass=MySQLdb.cursors.SSDictCursor);
     sqlCursor     = sqlConnection.cursor();
 
   while init_time <= end_time:
-    list_of_matchs = getListOfMatches_struct(init_time, True);
+    list_of_matchs = getListOfMatches_struct(init_time, False);
     for match_id in list_of_matchs:
-      match_data = getMatchData_struct(match_id, True, sql);
+      match_data = getMatchData_struct(match_id, False, sql);
 
     init_time += 300
 
