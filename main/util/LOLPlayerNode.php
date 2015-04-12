@@ -59,13 +59,13 @@
       if(!empty($this->player_timeline_data)){
         foreach ($this->player_timeline_data as $frame_index => $frame) {
           $rendered_html .= ''.
-          '<div class="timeline-spot '.$this->team.'" style="bottom: '.$frame["position"]["y_mapImg"].'px; left: '.$frame["position"]["x_mapImg"].'px" player-delta-data="'.$this->player_data['participantId'].'">'.
+          '<div class="timeline-spot '.$this->team.'" style="bottom: '.$frame["position"]["y_mapImg"].'px; left: '.$frame["position"]["x_mapImg"].'px" player-frame-delta="'.$frame_index.'" player-delta-data="'.$this->player_data['participantId'].'">'.
             '<div class="timeframe-stat-node">'.
               '<span class="timeframe-stat-level timeframe-stat">Level: '.$frame["level"].'</span>'.
               '<span class="timeframe-stat-cs timeframe-stat">Minions Killed: '.$frame["cs"].'</span>'.
-              '<span class="timeframe-stat-pos timeframe-stat">Position: {x:'.$frame["position"]["x"].', y:'.$frame["position"]["x"].'}</span>'.
-              '<span class="timeframe-stat-gold timeframe-stat">Gold: '.$frame['gold'].'</span>'.
               '<span class="timeframe-stat-jgkills timeframe-stat">Jungle Minions Killed: '.$frame['jungleKills'].'</span>'.
+              '<span class="timeframe-stat-gold timeframe-stat">Gold: '.$frame['gold'].'</span>'.
+              '<span class="timeframe-stat-pos timeframe-stat">Position: {x:'.$frame["position"]["x"].', y:'.$frame["position"]["x"].'}</span>'.
             '</div>'.
           '</div>';
         }
@@ -140,7 +140,13 @@
         '<img id="spell-2" class="spells" src="'.$static_spell_img_url.''.$static_spell_data->data->{$this->player_data["spell2Id"]}->image->full.'"/>';
     }
 
+    function getGentScore(){
+
+
+    }
+
     public function render() {
+      krumo($this->player_data);
       $rendered_html = ''.
         '<div class="player-node">';
           $rendered_html .= $this->renderMap();

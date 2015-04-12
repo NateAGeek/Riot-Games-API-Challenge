@@ -14,7 +14,7 @@
   </head>
   <body>
     <?php
-      for ($i=1; $i <=10 ; $i++) { 
+      for ($i=11; $i <=20 ; $i++) { 
         $player = build_LOLPlayerNode($i, true);
         echo $player->render();
       }

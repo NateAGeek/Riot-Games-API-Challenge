@@ -1,5 +1,8 @@
-// jQuery(document).ready(function($) {
-//   $(".timeline-spot").mouseover(function(event) {
-//     $(this).children('.timeframe-stat-node').css({display:"initial"});
-//   });
-// });
+jQuery(document).ready(function($) {
+  $(".timeline-spot").mouseover(function(event) {
+    $(this).css("z-index","1000");
+  });
+  $(".timeline-spot").mouseout(function(event) {
+    $(this).css("z-index","1");
+  });
+});

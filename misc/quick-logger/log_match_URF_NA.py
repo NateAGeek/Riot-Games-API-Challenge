@@ -35,8 +35,8 @@ def getListOfMatches_string(timestamp, log):
     
       if log:
         print "*** Logging Match ID's for time: " + str(timestamp) + " ***";
-        logFile             = open("logs/list_of_matchs_logs/urf_list_of_matchs_%s.json" % (str(timestamp)), "wb");
-        logFile.write(data);
+        # logFile             = open("logs/list_of_matchs_logs/urf_list_of_matchs_%s.json" % (str(timestamp)), "wb");
+        # logFile.write(data);
     
       return data;
 
@@ -64,8 +64,8 @@ def getMatchData_string(id, log):
     
       if log:
         print "\t*** Logging Match ID:" + str(id) + " ***";
-        logFile             = open("logs/match_data/urf_match_id_%s.json" % (str(id)), "wb");
-        logFile.write(data);
+        # logFile             = open("logs/match_data/urf_match_id_%s.json" % (str(id)), "wb");
+        # logFile.write(data);
     
       return data;
 
@@ -75,8 +75,15 @@ def getMatchData_struct(id, log, sql):
   match = json.loads(match_json_string);
 
   if sql:
+    sqlCursor.execute("SELECT COUNT(*) AS num_rows FROM `match` WHERE `match`.matchId = '%s'" % (str(match["matchId"])));
+
+    dup_matches = sqlCursor.fetchall();
+
     print "\t\t --Beginging To SQL Log Data id:%s--" %(str(id));
-    sql_log_match(match);
+    if dup_matches[0]["num_rows"] < 1:
+      sql_log_match(match);
+    else:
+      print "There's a snake in my boot, matchID: %s" %(str(match["matchId"]));
     print "\t\t --Logged To SQL Log Data id:%s--" %(str(id));
 
   return match;
@@ -100,10 +107,15 @@ def slq_log_bans(bans_data, match_id):
 def sql_log_teams(teams_data, match_id):
   delta = 0;
   for team in teams_data:
-    bans_id = slq_log_bans(team["bans"], match_id);
+    if not "bans" in team:
+      bans_id = -1;
+    else:
+      bans_id = slq_log_bans(team["bans"], match_id);
     sqlCursor.execute("""INSERT INTO `team`(firstDragon, bans_id, firstInhibitor, baronKills, winner, firstBaron, firstBlood, teamId, firstTower, vilemawKills, inhibitorKills, towerKills, dominionVictoryScore, dragonKills, match_id, delta) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""" % (str(team["firstDragon"]), str(bans_id), str(team["firstInhibitor"]), str(team["baronKills"]), str(team["winner"]), str(team["firstBaron"]), str(team["firstBlood"]), str(team["teamId"]), str(team["firstTower"]), str(team["vilemawKills"]), str(team["inhibitorKills"]), str(team["towerKills"]), str(team["dominionVictoryScore"]), str(team["dragonKills"]), str(match_id), str(delta)));
     team_id = sqlCursor.lastrowid;
-    sqlCursor.execute("""UPDATE `bans` SET team_id = %s WHERE ban_id = %s""" % (str(team_id), bans_id));
+    if "bans" in team:
+      sqlCursor.execute("""UPDATE `bans` SET team_id = %s WHERE ban_id = %s""" % (str(team_id), bans_id));
+    
     sqlConnection.commit();
     delta += 1;
 
@@ -358,6 +370,7 @@ def sql_log_match(data):
 def match_jsonData_string_to_sqlData(json_data_string):
   data = json.loads(json_data_string);
 
+
   sql_log_match(data);
 
 
@@ -404,9 +417,9 @@ def loop_log_data(init_time = 1427865900, end_time = 1428018900, sql = True):
     sqlCursor     = sqlConnection.cursor();
 
   while init_time <= end_time:
-    list_of_matchs = getListOfMatches_struct(init_time, False);
+    list_of_matchs = getListOfMatches_struct(init_time, True);
     for match_id in list_of_matchs:
-      match_data = getMatchData_struct(match_id, False, sql);
+      match_data = getMatchData_struct(match_id, True, sql);
 
     init_time += 300
 
