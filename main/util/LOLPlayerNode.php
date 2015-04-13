@@ -1,8 +1,8 @@
 <?php
   
-  include "dbHandler.php";
-  include "StaticData.php";
-  include "../libs/krumo/class.krumo.php";
+  include_once "dbHandler.php";
+  include_once "StaticData.php";
+  include_once "../libs/krumo/class.krumo.php";
 
   function build_LOLPlayerNode($player_id, $get_timelinedata = false){
     $result = db_query("SELECT * FROM `participant` LEFT JOIN `stats` ON `stats`.id = `participant`.stats_id LEFT JOIN `participant_timeline` AS `pt` ON `pt`.id = `participant`.timeline_id WHERE `participant`.id = '".$player_id."'");
@@ -141,12 +141,18 @@
     }
 
     function getGentScore(){
+      return rand();
+    }
 
+    function getTeam(){
+      return $this->team;
+    }
 
+    function getPlayerData(){
+      return $this->player_data;
     }
 
     public function render() {
-      krumo($this->player_data);
       $rendered_html = ''.
         '<div class="player-node">';
           $rendered_html .= $this->renderMap();

@@ -1,5 +1,10 @@
 Start Match Epoch Timestamp: 1427865900 + 1427867200
 
+Goal:
+  Who is the true Gent of the game:
+    calculate the amount of Gent Power
+  
+
 
 The scary reset query for the database:
 TRUNCATE TABLE `bans`;

@@ -62,7 +62,6 @@
 .spells {
   border: 1px #AAA solid;
   border-radius: 4px;
-  margin: 2px;
 }
 .player-items .player-item {
   display: inline-block;
@@ -98,12 +97,45 @@
   background-color: #000;
   border: 1px #00AFFF solid;
   width: 250px;
-  z-index: 2;
 }
 .timeline-map .timeline-spot .timeframe-stat-node .timeframe-stat {
   display: block;
 }
 .timeline-map .timeline-spot:hover .timeframe-stat-node {
   display: block;
+}
+.match-node {
+  background-color: #000;
+  padding: 5px;
+  border: 1px #00AFFF solid;
+  border-radius: 10px;
+  color: #FFF;
+  height: 560px;
+}
+.match-node .match-head-info .match-head-text {
+  font-size: 48px;
+  margin: 0 1%;
+}
+.match-node .match-teams {
+  text-align: center;
+}
+.match-node .team-lineup {
+  display: inline-block;
+  border-radius: 5px;
+  padding: 10px;
+}
+.match-node .team-lineup-red {
+  border: 1px red solid;
+}
+.match-node .team-lineup-blue {
+  border: 1px blue solid;
+}
+.match-node .srift-map {
+  position: inherit;
+  top: 0;
+}
+.match-node .versus-text {
+  display: block;
+  font-size: 64px;
 }
 /*# sourceMappingURL=css/main.css.map */
