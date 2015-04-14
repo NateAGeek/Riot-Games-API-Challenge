@@ -99,7 +99,7 @@
       if(!empty($this->player_timeline_data)){
         $rendered_html .= '<div class="timeline-map">';
         $rendered_html .= $this->renderMapSpots();
-        $rendered_html .= '<img class="srift-map" src="http://ddragon.leagueoflegends.com/cdn/5.2.1/img/map/map11.png"/>';
+        $rendered_html .= '<img class="srift-map" src="https://ddragon.leagueoflegends.com/cdn/5.2.1/img/map/map11.png"/>';
         $rendered_html .= '</div>';
       }
 

@@ -112,6 +112,22 @@
   color: #FFF;
   height: 560px;
 }
+.match-node .match-teams-bans {
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+}
+.match-node .match-teams-bans .bans-text {
+  display: block;
+}
+.match-node .match-teams-bans .match-bans {
+  display: inline-block;
+  margin: 0 10px;
+}
+.match-node .ban-champ-img {
+  width: 64px;
+  height: 64px;
+}
 .match-node .match-head-info .match-head-text {
   font-size: 48px;
   margin: 0 1%;
@@ -124,10 +140,12 @@
   border-radius: 5px;
   padding: 10px;
 }
-.match-node .team-lineup-red {
+.match-node .team-lineup-red,
+.match-node .match-bans-red {
   border: 1px red solid;
 }
-.match-node .team-lineup-blue {
+.match-node .team-lineup-blue,
+.match-node .match-bans-blue {
   border: 1px blue solid;
 }
 .match-node .srift-map {
