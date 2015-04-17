@@ -34,26 +34,3 @@
 //   init();
 //   renderCanvas();
 // });
-
-var ChampStaticURL = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion/";
-var StaticChampImage = "http://ddragon.leagueoflegends.com/cdn/img/champion/loading/";
-var api_key = "096de5b6-d371-41c2-a263-4db83088a4eb";
-var ChampData;
-
-jQuery(document).ready(function($) {
-  
-  $.getJSON('getPlayers.php', {match_id: '1778704162'}, function(json, textStatus) {
-      var players;
-      $.each(json, function(index, val) {
-         $.getJSON(ChampStaticURL+val['championId'], {api_key : api_key, champData:'image'}, function(champ, textStatus){
-          $("#game-data").append('<img src="'+StaticChampImage+champ["key"]+'_0.jpg"/>')
-          console.log(champ);
-         })
-
-
-
-
-      });
-  });
-
-});

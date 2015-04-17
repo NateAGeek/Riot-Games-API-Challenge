@@ -2,7 +2,7 @@
   
   include_once "dbHandler.php";
   include_once "StaticData.php";
-  include_once "../libs/krumo/class.krumo.php";
+  include_once "../../libs/krumo/class.krumo.php";
 
   function build_LOLPlayerNode($player_id, $get_timelinedata = false){
     $result = db_query("SELECT * FROM `participant` LEFT JOIN `stats` ON `stats`.id = `participant`.stats_id LEFT JOIN `participant_timeline` AS `pt` ON `pt`.id = `participant`.timeline_id WHERE `participant`.id = '".$player_id."'");
@@ -38,8 +38,8 @@
             'position' => array(
               'x' => (int) $row["x"],
               'y' => (int) $row["y"],
-              'x_mapImg' => round(((int)$row["x"])*512/14870),
-              'y_mapImg' => round(((int)$row["y"])*512/14980)
+              'x_mapImg' => round(((int)$row["x"])*256/14870),
+              'y_mapImg' => round(((int)$row["y"])*256/14980)
             ),
             'level'       => $row["level"],
             'cs'          => $row["minionsKilled"],

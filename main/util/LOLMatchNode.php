@@ -28,8 +28,6 @@
       $match_data["bans"][] = $row;
     }
 
-    krumo($match_data);
-
     $match = new LOLMatchNode($match_data, $players, $get_timelinedata);
 
     return $match;
@@ -164,7 +162,6 @@
     }
 
     public function renderMatchInfo(){
-      krumo($this->match_data);
       $rendered_html = '<div class="match-head-info">'.
         '<span class="match-head-text match-head-info-queueType">Match Type: '.$this->match_data['queueType'].'</span>'.
         '<span class="match-head-text match-head-info-matchId">Match ID: '.$this->match_data['matchId'].'</span>'.
@@ -176,7 +173,6 @@
     public function render(){
       $rendered_html = ''.
         '<div class="match-node">';
-          $rendered_html .= $this->renderMatchInfo();
           $rendered_html .= $this->renderMatchMap();
           $rendered_html .= $this->renderTeams();
           $rendered_html .= $this->renderBans();
