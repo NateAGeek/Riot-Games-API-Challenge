@@ -3,6 +3,7 @@ Installation:
   ***Please note: I plan to have a live demo on my website [http://riotapichall.nateageek.net](http://riotapichall.nateageek.net)***
 
 Database(Test on MySQL):
+
   *First generate the database called urf-data, the tables structures is located at /misc/urf-data.sql
   *Config the username and password of the query user, /main/util/dbHandler.php (Default = username:root password:’’)
   *To get data run the python script, /misc/quick-logger/log_match_URF_NA.py, please note if the database credentials are different from the default, username:’root’ password:’’, they can be changed in the loop_log_data function. 
