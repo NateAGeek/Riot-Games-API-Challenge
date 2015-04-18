@@ -60,10 +60,6 @@
   margin: 0;
   text-align: center;
 }
-.player-node .player-items .player-item {
-  width: 48px;
-  height: 48px;
-}
 .player-node .player-items .player-item img {
   width: 48px;
   height: 48px;
@@ -79,8 +75,7 @@
   border: 1px #AAA solid;
   border-radius: 4px;
 }
-.player-item img,
-.spells img {
+.spells {
   width: 48px;
   height: 48px;
 }

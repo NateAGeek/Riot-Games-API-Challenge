@@ -2,7 +2,7 @@
   
   include_once "dbHandler.php";
   include_once "StaticData.php";
-  include_once "../../libs/krumo/class.krumo.php";
+  include_once "../libs/krumo/class.krumo.php";
 
   function build_LOLPlayerNode($player_id, $get_timelinedata = false){
     $result = db_query("SELECT * FROM `participant` LEFT JOIN `stats` ON `stats`.id = `participant`.stats_id LEFT JOIN `participant_timeline` AS `pt` ON `pt`.id = `participant`.timeline_id WHERE `participant`.id = '".$player_id."'");
@@ -83,7 +83,7 @@
         $rendered_html .= ''.
         '<li class="player-item" id="player-item-'.$i.'">';
           if($this->player_data['item'.$i] == '0'){
-            $rendered_html .= '<div class="no-item"></div>';
+            $rendered_html .= '<img src="main/images/null_item.png"/>';
           }else{
             $rendered_html .= '<img src="'.$static_iteam_img_url.''.$this->player_data['item'.$i].'.png"/>';
           }
@@ -142,6 +142,9 @@
     }
 
     function getGentScore(){
+
+      krumo($this->player_data);
+
       return rand();
     }
 

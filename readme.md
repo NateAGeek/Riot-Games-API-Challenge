@@ -2,7 +2,7 @@
 Installation:
   ***Please note: I plan to have a live demo on my website [http://riotapichall.nateageek.net](http://riotapichall.nateageek.net)***
 
-Database(Test on MySQL):
+Database(Tested on MySQL):
 
   * First generate the database called urf-data, the tables structures is located at /misc/urf-data.sql
   * Config the username and password of the query user, /main/util/dbHandler.php (Default = username:root password:’’)

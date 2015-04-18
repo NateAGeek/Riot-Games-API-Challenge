@@ -115,4 +115,17 @@ function loadMatches(){
 
 jQuery(document).ready(function($) {
   loadMatches();
+  
+  $('.player-stats').hide();
+  $('.timeline-map').hide();
+  $('.full-build').hide();
+  $('.toggle_build').click(function(event) {
+    $(this).next('.full-build').slideToggle();
+  });
+  $('.toggle_map').click(function(event) {
+    $(this).next(".timeline-map").slideToggle();
+  });
+  $('.toggle_stats').click(function(event) {
+    $(this).next(".player-stats").slideToggle();
+  });
 });
