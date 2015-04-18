@@ -31,7 +31,7 @@
         $highest_gent_score_index = $key;
       }
     }
-    
+
     return $players[$highest_gent_score_index];
   }
 

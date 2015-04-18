@@ -1,3 +1,4 @@
+//In case I have time to do something cool with Three.js
 // var scene;
 // var camera;
 // var canvasElement;

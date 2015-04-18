@@ -3,6 +3,7 @@
   include_once "LOLPlayerNode.php";
   include_once "LOLUtil.php";
   include_once "StaticData.php";
+  include_once "../../libs/krumo/class.krumo.php";
 
   function build_LOLMatchNode($match_id, $get_timelinedata = false){
     $result = db_query("SELECT *, `participant`.id AS pid FROM `match` LEFT JOIN `participant` ON `match`.matchId = `participant`.match_id WHERE `match`.matchId = '".$match_id."'");
@@ -54,7 +55,7 @@
     public function renderMatchMap(){
       $rendered_html = '';
       if($this->get_timelinedata){
-        $rendered_html .= '<div class="timeline-map">';
+        $rendered_html .= '<div class="timeline-map col-md-3">';
         foreach ($this->players_data as $player_index => $player) {
           $rendered_html .= $player->renderMapSpots();
         }
@@ -69,7 +70,7 @@
     }
 
     public function getTrollGent(){
-      return get_BestGent($this->players_data);
+      return get_TrollGent($this->players_data);
     }
 
     public function getBlueTeam(){
@@ -119,7 +120,7 @@
     }
 
     public function renderTeams(){
-      $rendered_html = '<div class="match-teams">';
+      $rendered_html = '<div class="match-teams col-md-9">';
       $rendered_html .= $this->renderTeamLine('blue');
       $rendered_html .= '<span class="versus-text">VS.</span>';
       $rendered_html .= $this->renderTeamLine('red');
@@ -152,7 +153,7 @@
     }
 
     public function renderBans(){
-      $rendered_html = '<div class="match-teams-bans">';
+      $rendered_html = '<div class="match-teams-bans col-md-5">';
         $rendered_html .= '<span class="bans-text">Bans</span>';
         $rendered_html .= $this->renderTeamBans('blue');
         $rendered_html .= $this->renderTeamBans('red');
@@ -170,12 +171,15 @@
       return $rendered_html;
     }
 
-    public function render(){
+    public function render($should_add_button = false){
       $rendered_html = ''.
         '<div class="match-node">';
           $rendered_html .= $this->renderMatchMap();
           $rendered_html .= $this->renderTeams();
           $rendered_html .= $this->renderBans();
+          if($should_add_button){
+            $rendered_html .= '<div class="run_gents_button col-md-4"><button class="btn btn-default" type="button" onclick="get_gents('.$this->match_data["matchId"].')">Get The Gents</button></div>';
+          }
         $rendered_html .= '</div>';
 
         return $rendered_html;

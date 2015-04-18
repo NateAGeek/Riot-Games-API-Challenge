@@ -36,18 +36,18 @@
         <!-- Collection of nav links and other content for toggling -->
         <div id="navbarCollapse" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Match Mash</a></li>
+              <li class="active"><a href="/">Match Mash</a></li>
               <li><a href="#">Stats</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="https://github.com/NateAGeek/Riot-Games-API-Challenge">Created by: NateAGeek, LTrain</a></li>
+              <li><a href="https://github.com/NateAGeek/Riot-Games-API-Challenge">Created by: NateAGeek</a></li>
             </ul>
           </div>
       </div>
     </nav>
 
     <section class="content container">
-      <div class="row">
+      <div class="row" id="match_list_row">
         <div class="col-sm-12" id="list_of_matchs">
           <table class="table table-hover" id="match_table">
             <thead>
@@ -88,6 +88,8 @@
             </ul>
           </nav>
         </div>
+      </div>
+      <div class="row" id="gents_row">
       </div>
     </section>
 

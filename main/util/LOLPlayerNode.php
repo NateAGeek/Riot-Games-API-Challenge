@@ -53,7 +53,7 @@
     }
 
     public function renderMapSpots(){
-
+      global $static_champ_data;
       $rendered_html = '';
 
       if(!empty($this->player_timeline_data)){
@@ -61,6 +61,7 @@
           $rendered_html .= ''.
           '<div class="timeline-spot '.$this->team.'" style="bottom: '.$frame["position"]["y_mapImg"].'px; left: '.$frame["position"]["x_mapImg"].'px" player-frame-delta="'.$frame_index.'" player-delta-data="'.$this->player_data['participantId'].'">'.
             '<div class="timeframe-stat-node">'.
+              '<span class="timeframe-stat-champ timeframe-stat">Champion: '.$static_champ_data->keys->{$this->player_data["championId"]}.'</span>'.
               '<span class="timeframe-stat-level timeframe-stat">Level: '.$frame["level"].'</span>'.
               '<span class="timeframe-stat-cs timeframe-stat">Minions Killed: '.$frame["cs"].'</span>'.
               '<span class="timeframe-stat-jgkills timeframe-stat">Jungle Minions Killed: '.$frame['jungleKills'].'</span>'.
@@ -97,7 +98,7 @@
     public function renderMap(){
       $rendered_html = '';
       if(!empty($this->player_timeline_data)){
-        $rendered_html .= '<div class="timeline-map">';
+        $rendered_html .= '<div class="timeline-map col-md-12">';
         $rendered_html .= $this->renderMapSpots();
         $rendered_html .= '<img class="srift-map" src="https://ddragon.leagueoflegends.com/cdn/5.2.1/img/map/map11.png"/>';
         $rendered_html .= '</div>';
@@ -108,7 +109,7 @@
 
     public function renderStats(){
       global $static_champ_data;
-      $rendered_html = '<div class="player-stats">'.
+      $rendered_html = '<div class="player-stats col-md-12">'.
         '<span class="player-id player-stat">Player '.$this->player_data['participantId'].'</span>'.
         '<span class="">Champion: '.$static_champ_data->keys->{$this->player_data["championId"]}.'</span>'.
         '<span class="player-kda player-stat">KDA: '. $this->player_data['kills'] .'/'.$this->player_data['deaths'].'/'.$this->player_data['assists'].'</span>'.
@@ -128,7 +129,7 @@
     public function renderChamp(){
       global $static_champ_img_url;
       global $static_champ_data;
-      return '<img class="champ-img" src="'.$static_champ_img_url.'/'.$static_champ_data->keys->{$this->player_data["championId"]}.'.png"/>';
+      return '<img class="champ-img col-md-12" src="'.$static_champ_img_url.'/'.$static_champ_data->keys->{$this->player_data["championId"]}.'.png"/>';
     }
 
     public function renderSpells(){
@@ -154,21 +155,16 @@
 
     public function render() {
       $rendered_html = ''.
-        '<div class="player-node">';
-          $rendered_html .= $this->renderMap();
-          $rendered_html .= '<div class="top-info">'.
-            '<span class="player-id">Player '.$this->player_data['participantId'].'</span>'.
-            '<span class="player-match-status-'.(($this->winner) ? 'victory':'defeat').'">'.(($this->winner) ? 'Victory':'Defeat').'</span>'.
-          '</div>';
+        '<div class="player-node col-md-4">';
           $rendered_html .= $this->renderChamp();
-          $rendered_html .= '<div class="summoner-spells">'.
-            '<span class="summoner-spell-text">Spells: </span>';
+          $rendered_html .='<div class="col-md-12 selection-tab toggle_build">&#9654; Player Build Data</div>';
+          $rendered_html .= '<div class="full-build col-md-12">';
+            $rendered_html .= $this->renderFinalBuild();
             $rendered_html .= $this->renderSpells();
           $rendered_html .= '</div>';
-          $rendered_html .= '<div class="full-build">'.
-            '<span class="item-text">Full Build: </span>';
-            $rendered_html .= $this->renderFinalBuild();
-          $rendered_html .= '</div>';
+          $rendered_html .='<div class="col-md-12 selection-tab toggle_map">&#9654; Player Map Data</div>';
+          $rendered_html .= $this->renderMap();
+          $rendered_html .='<div class="col-md-12 selection-tab toggle_stats">&#9654; Player Stats</div>';
           $rendered_html .= $this->renderStats();
       $rendered_html .= ''.
         '</div>';

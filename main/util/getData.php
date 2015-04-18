@@ -26,10 +26,20 @@
     if(isset($_GET["match_id"]) && is_int((int)$_GET["match_id"])){
       $match = build_LOLMatchNode($_GET["match_id"], true);
       if($html){
-        echo $match->render();
+        echo $match->render(true);
       }else{
         echo json_encode($match);
       }
+    }
+  }
+  elseif($query == 'get_gents'){
+    if(isset($_GET["match_id"]) && is_int((int)$_GET["match_id"])){
+      $match = build_LOLMatchNode($_GET["match_id"], true);
+      $gents = array();
+      $gents["best"] = $match->getBestGent()->render();
+      $gents["troll"] = $match->getTrollGent()->render();
+
+      echo json_encode($gents);
     }
   }
   else{
